@@ -1,5 +1,6 @@
 from .api_request import APIRequestComponent
 from .csv_to_data import CSVToDataComponent
+from .data_to_db import DataToDBComponent
 from .directory import DirectoryComponent
 from .file import FileComponent
 from .json_to_data import JSONToDataComponent
@@ -22,4 +23,5 @@ __all__ = [
     "URLComponent",
     "WebSearchComponent",
     "WebhookComponent",
+    "DataToDBComponent"
 ]
