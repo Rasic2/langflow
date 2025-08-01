@@ -3,7 +3,7 @@ import os
 import requests
 
 from langflow.custom.custom_component.component import Component
-from langflow.inputs import FileInput
+from langflow.inputs import FileInput, StrInput
 from langflow.io import Output
 from langflow.schema import Message
 
@@ -18,12 +18,18 @@ class PDFParserComponent(Component):
     inputs = [
         FileInput(
             name="pdf_file",
+            display_name="PDF File",
             fileTypes=["pdf"]
+        ),
+        StrInput(
+            name="pdf_doi",
+            display_name="PDF DOI"
         )
     ]
 
     outputs = [
-        Output(name="content", display_name="PDF Content", method="load_pdf_to_content"),
+        Output(name="content", display_name="PDF Content", method="load_pdf_to_content", group_outputs=True),
+        Output(name="doi", display_name="PDF DOI", method="get_doi", group_outputs=True)
     ]
 
     def load_pdf_to_content(self) -> Message:
@@ -60,3 +66,6 @@ class PDFParserComponent(Component):
         result_response_content = result_response.json()['content']
 
         return Message(text=result_response_content)
+
+    def get_doi(self) -> Message:
+        return Message(text=self.pdf_doi)
