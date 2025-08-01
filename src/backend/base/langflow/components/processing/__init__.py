@@ -10,8 +10,10 @@ from .json_cleaner import JSONCleaner
 from .lambda_filter import LambdaFilterComponent
 from .llm_router import LLMRouterComponent
 from .merge_data import MergeDataComponent
+from .message_text_to_data import MessageTextToDataComponent
 from .message_to_data import MessageToDataComponent
 from .parse_data import ParseDataComponent
+from .parse_dataframe import ParseDataFrameComponent
 from .parse_json_data import ParseJSONDataComponent
 from .parser import ParserComponent
 from .prompt import PromptComponent
@@ -36,6 +38,7 @@ __all__ = [
     "MergeDataComponent",
     "MessageToDataComponent",
     "ParseDataComponent",
+    "MessageTextToDataComponent",
     "ParseDataFrameComponent",
     "ParseJSONDataComponent",
     "ParserComponent",

@@ -1,5 +1,8 @@
 from typing import cast
 
+from langchain_google_vertexai._utils import replace_defs_in_schema
+from langchain_google_vertexai.functions_utils import _format_json_schema_to_gapic
+
 from langflow.base.models.model import LCModelComponent
 from langflow.field_typing import LanguageModel
 from langflow.inputs.inputs import MessageTextInput, CodeInput
@@ -58,14 +61,14 @@ class ChatVertexAIComponent(LCModelComponent):
             project = self.project or None
             credentials = None
 
-
-
         response_schema = None
         if self.response_schema:
             # 动态执行代码（生产环境需严格检查输入！）
             namespace = {}
             exec(self.response_schema, namespace)
             response_schema = namespace[self.response_schema_class].model_json_schema()
+            response_schema = replace_defs_in_schema(response_schema)
+            response_schema = _format_json_schema_to_gapic(response_schema)
 
         return cast(
             "LanguageModel",
