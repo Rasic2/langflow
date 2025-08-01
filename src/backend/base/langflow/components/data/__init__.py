@@ -5,6 +5,7 @@ from .directory import DirectoryComponent
 from .file import FileComponent
 from .json_to_data import JSONToDataComponent
 from .news_search import NewsSearchComponent
+from .parser import PDFParserComponent
 from .rss import RSSReaderComponent
 from .sql_executor import SQLComponent
 from .url import URLComponent
@@ -23,5 +24,6 @@ __all__ = [
     "URLComponent",
     "WebSearchComponent",
     "WebhookComponent",
-    "DataToDBComponent"
+    "DataToDBComponent",
+    "PDFParserComponent"
 ]

@@ -127,7 +127,7 @@ dependencies = [
     "filelock>=3.18.0",
     "jigsawstack==0.2.7",
     "onnxruntime==1.17",
-    "bohrium-open-sdk==0.1.5a70",
+    "bohrium-open-sdk==0.1.5a82",
 ]
 
 [dependency-groups]
