@@ -9,7 +9,7 @@ from langflow.schema import Message
 
 
 class PDFParserComponent(Component):
-    display_name = "Literature PDF Parser"
+    display_name = "PDF Parser"
     description = "parse pdf to content"
     icon = "file-text"
     name = "PDFParser"
@@ -17,7 +17,8 @@ class PDFParserComponent(Component):
 
     inputs = [
         FileInput(
-            name="pdf_file"
+            name="pdf_file",
+            fileTypes=["pdf"]
         )
     ]
 

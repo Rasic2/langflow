@@ -2,7 +2,7 @@ from typing import cast
 
 from langflow.base.models.model import LCModelComponent
 from langflow.field_typing import LanguageModel
-from langflow.inputs.inputs import MessageTextInput
+from langflow.inputs.inputs import MessageTextInput, CodeInput
 from langflow.io import BoolInput, FileInput, FloatInput, IntInput, StrInput
 
 
@@ -23,6 +23,10 @@ class ChatVertexAIComponent(LCModelComponent):
         MessageTextInput(name="model_name", display_name="Model Name", value="gemini-1.5-pro"),
         StrInput(name="project", display_name="Project", info="The project ID.", advanced=True),
         StrInput(name="location", display_name="Location", value="us-central1", advanced=True),
+        StrInput(name="response_mime_type", display_name="Response Mime Type", value="application/json", advanced=True),
+        StrInput(name="response_schema_class", display_name="Response Schema Class", advanced=True),
+        CodeInput(name="response_schema", display_name="Response Schema", info="The Python code to execute.",
+                  advanced=True),
         IntInput(name="max_output_tokens", display_name="Max Output Tokens", advanced=True),
         IntInput(name="max_retries", display_name="Max Retries", value=1, advanced=True),
         FloatInput(name="temperature", value=0.0, display_name="Temperature"),
@@ -54,9 +58,20 @@ class ChatVertexAIComponent(LCModelComponent):
             project = self.project or None
             credentials = None
 
+
+
+        response_schema = None
+        if self.response_schema:
+            # 动态执行代码（生产环境需严格检查输入！）
+            namespace = {}
+            exec(self.response_schema, namespace)
+            response_schema = namespace[self.response_schema_class].model_json_schema()
+
         return cast(
             "LanguageModel",
             ChatVertexAI(
+                response_mime_type=self.response_mime_type,
+                response_schema=response_schema,
                 credentials=credentials,
                 location=location,
                 project=project,
