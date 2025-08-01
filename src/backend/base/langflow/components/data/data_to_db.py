@@ -27,8 +27,11 @@ class DataToDBComponent(Component):
         DataInput(
             name="data_for_db",
             display_name="Import Data",
-            info="Provide the data",
-            list=True
+            info="Provide the data"
+        ),
+        StrInput(
+            name="key_of_data",
+            display_name="Data Key"
         )
     ]
 
@@ -43,6 +46,6 @@ class DataToDBComponent(Component):
         BaseUrl = "https://openapi.dp.tech"
 
         database_client = SQLClient(access_key=AccessKey, app_key=AppKey, openapi_addr=BaseUrl)
-        database_client.table_with_ak(table_ak).Insert(self.data_for_db)
+        database_client.table_with_ak(table_ak).Insert(self.data_for_db.data[self.key_of_data])
 
         return Message(text="Success load data to db")
